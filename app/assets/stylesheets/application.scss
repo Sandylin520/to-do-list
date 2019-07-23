@@ -16,7 +16,10 @@
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
   padding-left: 0px;
   padding-right: 0px;
+  position: relative;
+
 }
+
 
 
 .header{
@@ -48,7 +51,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-top: 10px;
+    padding:0 15px;
 
     .item {
       width: 50%;
@@ -82,4 +85,40 @@
       font-weight: 600;
     }
   }
+}
+
+.table{
+  margin-top: 40px;
+}
+
+label {
+  color:#4d4d4d;
+}
+
+
+.new_button{
+    position: absolute;
+    margin: 10px 30px;
+    margin-left: 5px;
+
+}
+
+.new_button .link{
+  margin-left:5px;
+  margin-right: 150px;
+}
+
+
+#flash-message{
+  color: #333333;
+  margin-right: 0px;
+}
+
+
+.form-group{
+  margin-top:30px;
+}
+
+.new_button_surrounding{
+    overflow: hidden;
 }

@@ -10,7 +10,7 @@ class TodosController < ApplicationController
       def status
          @todo.update(is_public: !(@todo.status))
        #status: nil, !nil =>true
-       #is_public: true =>預設為true,代表預設為打勾   
+       #is_public: true =>預設為true,代表預設為打勾
       end
 
       def new
@@ -26,6 +26,7 @@ class TodosController < ApplicationController
         if @todo.save
           # 跳出通知訊息，告知成功新增  flash[:notice] = 'List was successfully created !!'
           # 重新發出 request，導往列表頁。對瀏覽器來說會重整頁面
+          flash[:notice] = 'List was successfully created!!'
           redirect_to todos_path
         else
           # 當驗證失敗時，將 @todo 傳入 new.html.erb 做 render
@@ -38,33 +39,54 @@ class TodosController < ApplicationController
       def show;
       end
 
+
       def edit;
+        #前面有先傳入id參數 直接入edit畫面，
+        #另外加條件   若due_date < Date.today,則出現flash訊息,畫面跳轉回index頁面，
+        if @todo.overdue?
+           flash[:alert] = 'List is overdue, can not be edited !!'
+           redirect_to todos_path
+        end
       end
 
+#
       def update
         # before_action :find_todo 取代
         # 如果驗證成功，則更新，並回到列表頁，告知成功更新
         # 如果驗證失敗，則不更新，並保留已填寫資訊，回到 edit，繼續填寫
         if @todo.update_attributes(todo_params)
+           flash[:notice] = 'List was successfully updated!!'
           # 跳出通知訊息，告知成功更新  flash[:notice] = 'List was successfully updated !!'
           # 重新發出 request，導往列表頁。對瀏覽器來說會重整頁面
-          redirect_to todos_path
+           redirect_to todos_path
         else
           # 當驗證失敗時，將 @todo 傳入 edit.html.erb 做 render
           # 以達成體驗上：「保留已填寫資料，讓使用者可以繼續填寫錯誤的部分」
-          render :edit
+           render :edit
         end
       end
 
       def destroy
-        if @todo.due_date.past?
-          flash[:alert] = "this is out of date!"
+        if @todo.can_destroy? #can_destroy定義在todo.rb
+           @todo.destroy
+           # 跳出警告訊息，告知成功刪除
+           flash[:alert] = 'List was successfully deleted!!'
+           # 重新發出 request，導往列表頁。對瀏覽器來說會重整頁面
+           redirect_to todos_path
         else
-          @todo.destroy
+           # 跳出警告訊息，告知過期
+           flash[:alert] = 'List is overdue, can not be deleted !!'
+           # 重新發出 request，導往列表頁。對瀏覽器來說會重整頁面
+           redirect_to todos_path
         end
-        redirect_to todos_url
       end
 
+#        if @todo.due_date.past?
+#          flash[:alert] = 'List is overdue, can not be deleted !!'
+#        else
+#          @todo.destroy
+#        end
+#        redirect_to todos_url
 
       private
 

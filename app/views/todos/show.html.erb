@@ -14,26 +14,31 @@
         </div>
         <div class="item"><i class="far fa-calendar-check"></i></div>
       </div>
+    </div>
+
 
   <%= form_for @todo,:html => {:class => "form-horizontal center"} do |f| %>
   <div class="form-group">
-    <%= f.label :task, "項目", class: "col-md-3 control-label" %>
+    <%= f.label :task, "Task", class: "col-md-3 control-label" %>
     <div class="col-md-7">
       <%= f.text_field :task, class: "form-control", readonly: true  %>
     </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :note, "內容", class: "col-md-3 control-label" %>
+    <%= f.label :note, "Note", class: "col-md-3 control-label" %>
     <div class="col-md-7">
       <%= f.text_area :note, class: "form-control", readonly: true, :rows => 5 %>
     </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :due_date, "截止日", class: "col-md-3 control-label" %>
+    <%= f.label :due_date, "Due Date", class: "col-md-3 control-label" %>
     <div class="col-md-7">
       <%= f.text_field :due_date, class: "form-control", readonly: true  %>
     </div>
   </div>
+
   <div class="form-group">
     <div class="col-md-3"></div>
     <div class="col-md-7">
